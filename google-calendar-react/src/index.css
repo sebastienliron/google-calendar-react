@@ -12,6 +12,13 @@ code {
     monospace;
 }
 
+.grid-header-cal{
+  border: 1px solid lightgray;
+  display: inline-block;
+  color: black;
+  width: 100px;
+}
+
 .grid-cell-cal{
   width: 100px;
   border: 1px solid lightgray;
@@ -20,6 +27,36 @@ code {
   color: black;
 }
 
+.grid-week-day-col{
+  width: 120px;
+  display: inline-block;
+}
+
+.grid-week-cell-cal{
+  width: 120px;
+  border: 1px solid lightgray;
+  height : 25px;
+  color: black;
+}
+
+.grid-week-header{
+  width: 120px;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.grid-week-header-today{
+  border: 1px solid blue;
+  color: blue;
+}
+
 .disable-grid-cell{
   color : gray;
+}
+
+.grid-container{
+  position: relative;
+  white-space: nowrap;
+  overflow: visible;
 }

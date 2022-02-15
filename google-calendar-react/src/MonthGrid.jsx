@@ -8,19 +8,27 @@ class MonthGrid extends Component {
         currentDate: null,
         startDate: null,
         endDate : null,
+        days : days,
         gridModel : null,
         rows: 6,
         nbDays : 7
      }
 
-     componentDidMount()
+     refreshView()
      {
-        var seedDay = new Date();
-        this.setState({currentDate : this.state.currentDate || seedDay});
+        var seedDay = this.props.seedDate || new Date();
+        this.setState({currentDate : seedDay});
         var startDate = new Date(seedDay);
         startDate.setDate(1);
         var dayFromSunday = startDate.getDay();
-        startDate.setDate(-dayFromSunday);
+        if (this.props.startMonday === true)
+        {
+            this.setState({days : [...days.slice(1), days[0]]});
+            dayFromSunday = dayFromSunday - 1;
+            if (dayFromSunday < 0)
+                dayFromSunday = 6;
+        }
+        startDate.setDate(startDate.getDate() - dayFromSunday);
         this.setState({startDate : startDate});
         
         var gridModel = [];
@@ -37,17 +45,34 @@ class MonthGrid extends Component {
         this.setState({gridModel : gridModel});
      }
 
+     componentDidMount()
+     {
+        this.refreshView();  
+     }
+
+
+     componentDidUpdate(prevProps, prevState)
+     {
+         if (prevProps.seedDate !== this.props.seedDate)
+         {
+            this.refreshView();
+         }
+     }
+
      render() {
         let final =  
         <div>
            <p> date : { this.state.currentDate ? months[this.state.currentDate.getMonth()] + " " + this.state.currentDate.getFullYear() : "NA" }</p>
            <p> start date : { this.state.startDate ? this.state.startDate.toString()  : "NA" }</p>
-           <div>
-               cells :  {this.state.gridModel ?  this.state.gridModel.length : 'null'}
-            {this.state.gridModel && this.state.gridModel.map( line => 
-                <div>
-                    {line.map( cell => 
-                        <div className={'grid-cell-cal ' + (cell.getMonth() !== this.state.currentDate.getMonth() ? ' disable-grid-cell' : '')}>{cell.getDate()}</div>
+           <div className='grid-container'>
+                {this.state.gridModel && this.state.days.map( (day, index) => <div key={'header-' + index } className='grid-header-cal'>{day}</div>)}
+                {this.state.gridModel && this.state.gridModel.map( (line, lineIndex) => 
+                <div key={lineIndex}>
+                    {line.map( (cell, index) => 
+                        <div id={lineIndex + '-' + index} key={lineIndex + '-' + index}
+                             className={'grid-cell-cal ' + (cell.getMonth() !== this.state.currentDate.getMonth() ? ' disable-grid-cell' : '')}>
+                                 {cell.getDate()}
+                        </div>
                     )}
                 </div>
              )

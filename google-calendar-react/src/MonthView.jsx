@@ -10,7 +10,7 @@ class MonthView extends Component {
      render() {
         let final =  
         <div><h2>month view</h2>
-            <MonthGrid/>
+            <MonthGrid startMonday={this.props.startMonday} seedDate={this.props.seedDate}/>
         </div>
         return final;
      }
