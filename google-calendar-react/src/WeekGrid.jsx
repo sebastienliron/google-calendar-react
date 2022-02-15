@@ -17,7 +17,7 @@ class WeekGrid extends Component {
 
      refreshView(){
         var seedDay = this.props.seedDate || new Date();
-        this.setState({currentDate : seedDay});
+        this.setState({currentDate : new Date(seedDay)});
         this.setState({today : new Date()});
         var startDate = new Date(seedDay);
         var dayFromSunday = startDate.getDay();
@@ -90,8 +90,8 @@ class WeekGrid extends Component {
      render() {
         let final =  
         <div>
-           <p> date : { this.state.currentDate ? months[this.state.currentDate.getMonth()] + " " + this.state.currentDate.getFullYear() : "NA" }</p>
-           <p> start date : { this.state.startDate ? this.state.startDate.toString()  : "NA" }</p>
+           <p> Month : { this.state.currentDate ? months[this.state.currentDate.getMonth()] + " " + this.state.currentDate.getFullYear() : "NA" }</p>
+           <p> seed date : { this.state.startDate ? this.state.startDate.toString()  : "NA" }</p>
            <div className='grid-container'>
             {this.state.gridModel && this.state.gridModel.map( (line, index) => 
                 <div key={'week-header-' + index} className='grid-week-day-col'>

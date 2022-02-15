@@ -17,7 +17,7 @@ class MonthGrid extends Component {
      refreshView()
      {
         var seedDay = this.props.seedDate || new Date();
-        this.setState({currentDate : seedDay});
+        this.setState({currentDate : new Date(seedDay)});
         var startDate = new Date(seedDay);
         startDate.setDate(1);
         var dayFromSunday = startDate.getDay();
@@ -62,8 +62,8 @@ class MonthGrid extends Component {
      render() {
         let final =  
         <div>
-           <p> date : { this.state.currentDate ? months[this.state.currentDate.getMonth()] + " " + this.state.currentDate.getFullYear() : "NA" }</p>
-           <p> start date : { this.state.startDate ? this.state.startDate.toString()  : "NA" }</p>
+           <p> Month : { this.state.currentDate ? months[this.state.currentDate.getMonth()] + " " + this.state.currentDate.getFullYear() : "NA" }</p>
+           <p> seed date : { this.state.startDate ? this.state.startDate.toString()  : "NA" }</p>
            <div className='grid-container'>
                 {this.state.gridModel && this.state.days.map( (day, index) => <div key={'header-' + index } className='grid-header-cal'>{day}</div>)}
                 {this.state.gridModel && this.state.gridModel.map( (line, lineIndex) => 
